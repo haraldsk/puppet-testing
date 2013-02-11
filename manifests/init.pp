@@ -1,6 +1,6 @@
 # == Class: testing
 #
-# Full description of class testing here.
+#  Testing class
 #
 # === Parameters
 #
@@ -38,7 +38,7 @@
 class testing (
   $service_ensure = 'running',
   $service_enable = true,
-  $some_option   =  false,
+  $some_option   =  false
 ) {
 
   include testing::params
