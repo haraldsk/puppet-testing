@@ -41,6 +41,8 @@ class testing (
   $some_option   =  false,
 ) {
 
+  include testing::params
+
   # stdlib
   validate_re($service_ensure, '(running|stopped)')
 
