@@ -1,69 +1,20 @@
 # == Class: testing
 #
-# Full description of class testing here.
-#
-# === Parameters
-#
-# Document parameters here.
-#
-# [*sample_parameter*]
-#   Explanation of what this parameter affects and what it defaults to.
-#   e.g. "Specify one or more upstream ntp servers as an array."
-#
-# === Variables
-#
-# Here you should define a list of variables that this module would require.
-#
-# [*sample_variable*]
-#   Explanation of how this variable affects the funtion of this class and if it
-#   has a default. e.g. "The parameter enc_ntp_servers must be set by the
-#   External Node Classifier as a comma separated list of hostnames." (Note,
-#   global variables should not be used in preference to class parameters  as of
-#   Puppet 2.6.)
-#
-# === Examples
-#
-#  class { testing:
-#    servers => [ 'pool.ntp.org', 'ntp.local.company.com' ]
-#  }
-#
-# === Authors
-#
-# Author Name <author@domain.com>
-#
-# === Copyright
-#
-# Copyright 2013 Your name here, unless otherwise noted.
+# Testing
 #
 class testing (
   $service_ensure = 'running',
   $service_enable = true,
-  $some_option   =  false,
 ) {
 
   include testing::params
 
-  case $::osfamily {
-    'Debian': { $_testing_packge = 'testing-tools' }
-    'RedHat': { $_testing_packge = 'testing-suite' }
-    default: { fail("${::osfamily} currently not supported")}
-  }
-
-
-  package { $_testing_packge:
+  package { $params::package:
     ensure => installed,
   }
 
-  if $some_option {
-    file { '/etc/testing/conf.d/some_option.conf':
-      ensure  => present,
-      content => "some_option = on\n",
-    }
-  } else {
-    file { '/etc/testing/conf.d/some_option.conf':
-      ensure  => absent,
-    }
-  }
+  # stdlib
+  validate_re($service_ensure, '(running|stopped)')
 
   service {
     'testing_service':
