@@ -43,9 +43,6 @@ class testing (
 
   include testing::params
 
-  # stdlib
-  validate_re($service_ensure, '(running|stopped)')
-
   case $::osfamily {
     'Debian': { $_testing_packge = 'testing-tools' }
     'RedHat': { $_testing_packge = 'testing-suite' }
@@ -67,6 +64,9 @@ class testing (
       ensure  => absent,
     }
   }
+
+  # stdlib
+  validate_re($service_ensure, '(running|stopped)')
 
   service {
     'testing_service':
