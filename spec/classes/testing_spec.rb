@@ -3,7 +3,7 @@ require 'spec_helper'
 # http://rspec-puppet.com/tutorial/
 
 describe 'testing', :type => 'class' do
-  let(:facts) { {:osfamily => 'Darwin' } }
+  let(:facts) { {:osfamily => 'Debian' } }
 
   it do
     should include_class('testing::params')
@@ -14,7 +14,7 @@ describe 'testing', :type => 'class' do
       'ensure'  => 'running',
       'enable'  => 'true',
     } )
-    should contain_package('testing-osx')
+      should contain_package('testing-tools')
   end
 
   context 'Redhat' do
@@ -24,10 +24,12 @@ describe 'testing', :type => 'class' do
     end
   end
 
-  context 'Debian' do
-    let(:facts) { {:osfamily => 'Debian' } }
+  context 'some_option => true' do
+    let(:params) { {:some_option => 'true' } }
     it do
-      should contain_package('testing-tools')
+      should contain_file('/etc/testing/conf.d/some_option.conf') \
+        .with( { 'ensure' => 'present' } ) \
+        .with_content(/^\s*some_option\s?=\s=?on\s*$/)
     end
   end
 
@@ -48,14 +50,6 @@ describe 'testing', :type => 'class' do
        }.to raise_error(Puppet::Error)
     end
 
-  end
-  context 'some_option => true' do
-    let(:params) { {:some_option => 'true' } }
-    it do
-      should contain_file('/etc/testing/conf.d/some_option.conf') \
-        .with( { 'ensure' => 'present' } ) \
-        .with_content(/^\s*some_option\s?=\s=?on\s*$/)
-    end
   end
 
   context 'service_enabled => false' do
