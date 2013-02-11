@@ -1,15 +1,13 @@
 require 'spec_helper'
 
 # http://rspec-puppet.com/tutorial/
+# https://github.com/rodjek/rspec-puppet/blob/master/README.md
 
 describe 'testing', :type => 'class' do
   let(:facts) { {:osfamily => 'Debian' } }
 
   it do
     should include_class('testing::params')
-    should contain_file('/etc/testing/conf.d/some_option.conf').with( {
-        'ensure' => 'absent'
-    } )
     should contain_service('testing_service').with( {
       'ensure'  => 'running',
       'enable'  => 'true',
@@ -24,14 +22,6 @@ describe 'testing', :type => 'class' do
     end
   end
 
-  context 'some_option => true' do
-    let(:params) { {:some_option => 'true' } }
-    it do
-      should contain_file('/etc/testing/conf.d/some_option.conf') \
-        .with( { 'ensure' => 'present' } ) \
-        .with_content(/^\s*some_option\s?=\s=?on\s*$/)
-    end
-  end
 
   context 'Windows' do
     let(:facts) { {:osfamily => 'Windows' } }
