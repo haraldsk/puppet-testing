@@ -8,4 +8,13 @@
 #
 # Learn more about module testing here: http://docs.puppetlabs.com/guides/tests_smoke.html
 #
+
 include testing
+
+testing::option{
+  'option1': value  => true ;
+  'option2': value  => false ;
+  'option3': value  => 'potato';
+  'option4': value  => absent;
+}
+
