@@ -8,7 +8,7 @@ branches:
   only:
     - stage_boss
 env:
-  - PUPPET_VERSION=2.7.0
+  - PUPPET_VERSION=2.7.1
   - PUPPET_VERSION=2.7.20
   - PUPPET_VERSION=3.0.2
 matrix:
