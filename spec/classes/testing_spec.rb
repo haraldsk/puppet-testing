@@ -52,12 +52,8 @@ describe 'testing', :type => 'class' do
   context 'some_option => true' do
     let(:params) { {:some_option => 'true' } }
     it do
-
-      should contain_file('/etc/testing/conf.d/some_option.conf').with( {
-        'ensure' => 'present'
-      } )
-
-     should contain_file('/etc/testing/conf.d/some_option.conf') \
+      should contain_file('/etc/testing/conf.d/some_option.conf') \
+        .with( { 'ensure' => 'present' } ) \
         .with_content(/^\s*some_option\s?=\s=?on\s*$/)
     end
   end
