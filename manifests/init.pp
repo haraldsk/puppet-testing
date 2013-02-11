@@ -41,6 +41,9 @@ class testing (
   $some_option   =  false,
 ) {
 
+  # stdlib
+  validate_re($service_ensure, '(running|stopped)')
+
   case $::osfamily {
     'Debian': { $_testing_packge = 'testing-tools' }
     'RedHat': { $_testing_packge = 'testing-suite' }
