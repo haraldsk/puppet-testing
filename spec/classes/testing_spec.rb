@@ -8,41 +8,60 @@ describe 'testing', :type => 'class' do
 
   it do
     should include_class('testing::params')
-    should contain_service('testing_service').with( {
-      'ensure'  => 'running',
-      'enable'  => 'true',
-    } )
-      should contain_package('testing-tools')
   end
 
-  context 'Redhat' do
+  context '$::osfamily = Debian' do
+    let(:facts) { {:osfamily => 'Debian' } }
+    it do
+      should contain_package('testing-tools')
+    end
+  end
+
+  context '$::osfamily = Redhat' do
     let(:facts) { {:osfamily => 'RedHat' } }
     it do
       should contain_package('testing-suite')
     end
   end
 
-
-  context 'Windows' do
+  context '$::osfamily = Windows' do
     let(:facts) { {:osfamily => 'Windows' } }
     it do
        expect {
-        should contain_file('/etc/testing/conf.d/some_option.conf')
-       }.to raise_error(Puppet::Error)
+        should contain_service('testing_service')
+       }.to raise_error(Puppet::Error, /Osfamily:\s*Windows/ )
     end
   end
 
-  context 'service_ensure => foo' do
+  context '$::osfamily = undef' do
+    let(:facts) { {  } }
+    it do
+       expect {
+        should contain_service('testing_service')
+       }.to raise_error(Puppet::Error, /Osfamily/ )
+    end
+  end
+
+  context 'include testing' do
+    it do
+      should contain_service('testing_service').with( {
+        'ensure'  => 'running',
+        'enable'  => 'true',
+      } )
+    end
+  end
+
+  context 'class { testing: service_ensure => foo }' do
     let(:params) { {:service_ensure => 'foo' } }
     it do
        expect {
-        should contain_file('/etc/testing/conf.d/some_option.conf')
-       }.to raise_error(Puppet::Error)
+        should contain_service('testing_service')
+       }.to raise_error(Puppet::Error, /validate_re.*foo/ )
     end
 
   end
 
-  context 'service_enabled => false' do
+  context 'class { testing: service_enabled => false }' do
     let(:params) { {:service_enable => 'false' } }
     it do
       should contain_service('testing_service').with( {
