@@ -1,7 +1,6 @@
 language: ruby
 rvm:
   - 1.8.7
-  - 1.9.2
   - 1.9.3
 script: "rake spec"
 branches:
@@ -10,13 +9,7 @@ branches:
 env:
   - PUPPET_VERSION=2.7.1
   - PUPPET_VERSION=2.7.20
-  - PUPPET_VERSION=3.0.2
+  - PUPPET_VERSION=3.1.0
 matrix:
-  exclude:
-    - rvm: 1.9.2
-      env: PUPPET_VERSION=2.6.14
-    - rvm: 1.9.3
-      env: PUPPET_VERSION=2.6.14
   allow_failures:
-    - rvm: 1.8.7
-      env: PUPPET_VERSION=2.6.14
+      - env: PUPPET_VERSION=2.7.1
