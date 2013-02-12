@@ -17,7 +17,7 @@ describe 'testing', :type => 'class' do
     end
   end
 
-  context '$::osfamily = Redhat' do
+  context '$::osfamily = RedHat' do
     let(:facts) { {:osfamily => 'RedHat' } }
     it do
       should contain_package('testing-suite')
@@ -58,7 +58,6 @@ describe 'testing', :type => 'class' do
         should contain_service('testing_service')
        }.to raise_error(Puppet::Error, /validate_re.*foo/ )
     end
-
   end
 
   context 'class { testing: service_enabled => false }' do
