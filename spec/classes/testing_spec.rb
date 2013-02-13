@@ -10,21 +10,21 @@ describe 'testing', :type => 'class' do
     should include_class('testing::params')
   end
 
-  context '$::osfamily = Debian' do
+  context 'with $::osfamily = Debian' do
     let(:facts) { {:osfamily => 'Debian' } }
     it do
       should contain_package('testing-tools')
     end
   end
 
-  context '$::osfamily = RedHat' do
+  context 'with $::osfamily = RedHat' do
     let(:facts) { {:osfamily => 'RedHat' } }
     it do
       should contain_package('testing-suite')
     end
   end
 
-  context '$::osfamily = Windows' do
+  context 'with $::osfamily = Windows' do
     let(:facts) { {:osfamily => 'Windows' } }
     it do
        expect {
@@ -33,7 +33,7 @@ describe 'testing', :type => 'class' do
     end
   end
 
-  context '$::osfamily = undef' do
+  context 'with $::osfamily = undef' do
     let(:facts) { {  } }
     it do
        expect {
